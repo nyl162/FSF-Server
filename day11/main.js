@@ -29,6 +29,8 @@ app.listen(3000,() =>{
     console.info('Application started on port 3000');
     console.info('\truning directory is ', __dirname);
     console.info('\tpublic directory is ', path.join(__dirname, "public"));
+    //let asdf = express.static(__dirname + "/public")
+    //console.log(typeof asdf);
 
 })
 

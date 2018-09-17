@@ -3,8 +3,9 @@ const path = require ("path");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname,"SWA")));
 //app.use(express.static(path.join(__dirname,"dist","StarwarsApp")));
-app.use(express.static(path.join(__dirname,"public")));
+//app.use(express.static(path.join(__dirname,"public")));
 //app.use(express.static(path.join(__dirname,"media")));
 
 app.use((req,resp,next)=>{
@@ -13,7 +14,7 @@ app.use((req,resp,next)=>{
     
     // good for API
     resp.status(404); 
-    resp.sendfile(path.join(__dirname,"public","404.html"));
+    resp.sendFile(path.join(__dirname,"public","404.html"));
 })
 
 const PORT = parseInt(process.argv[2]) || parseInt(process.env.APP_PORT) || 3000

@@ -1,10 +1,12 @@
 const path = require ('path');
 const express = require ('express');
 
-const app = express();
+const fs = require('fs');
+
+const resources = ['public','images']
 
 const imageArr = [
-    'acorn_squash.png',
+/*    'acorn_squash.png',
     'apple.png',
     'bell_pepper.png',
     'blueberries.png',
@@ -25,14 +27,26 @@ const imageArr = [
     'strawberry.png',
     'sugar_snap.png',
     'tomato.png',
-    'zucchini.png'
-]
+    'zucchini.png'*/
+];
+
+fs.readdirSync(path.join(__dirname, 'images')).forEach(file => {
+  imageArr.push(file);
+ // console.log(imageArr);
+})
+
+const app = express();
+
+const randImage = (array) => {
+    const rand = Math.floor(Math.random() * (array.length) );
+    return array[rand];
+}
 
 app.get('/image', (req,res,next)=>{
-    let rand = Math.floor(Math.random() * (imageArr.length) );
+    //let rand = Math.floor(Math.random() * (imageArr.length) );
     res.status(200);
     res.type('text/html');
-    res.send(`<img src="/images/${imageArr[rand]}">`);
+    res.send(`<img src="/${randImage(imageArr)}">`);
     //res.send(`<head><meta http-equiv="refresh" content="1"></head><img src="/images/${imageArr[rand]}">`);
     //res.end();
 });
@@ -46,16 +60,19 @@ app.get('/images/:imagefile', (req,res,next)=>{
     //res.end();
 });
 */
-
-app.use('/images',express.static(path.join(__dirname, 'images')));
+for (let res of resources) {
+app.use(express.static(path.join(__dirname, res)));
+}
 
 app.get('/random-image', (req,res,next)=>{
-    let rand = Math.floor(Math.random() * (imageArr.length) );
+    //let rand = Math.floor(Math.random() * (imageArr.length) );
     //console.log(`rand = ${rand}, imglength = ${imageArr.length}`);
     res.status(200);
     res.type('image/png');
+        
+    //res.type('text/plain');
     //console.log(path.join(__dirname, 'images',req.params.imagefile));
-    res.sendFile(path.join(__dirname, 'images',imageArr[rand]));
+    res.sendFile(path.join(__dirname, 'images',randImage(imageArr)));
     //res.send(path.join(__dirname,'images',res.imagefile));
     //res.end();
 });

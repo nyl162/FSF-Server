@@ -42,6 +42,30 @@ const randImage = (array) => {
     return array[rand];
 }
 
+app.get('/image',(req,res,nex)=>{
+    res.status(200);
+    res.format({
+        'text/html': ()=>{
+            res.type('text/html');
+            res.send(`<img src="/${randImage(imageArr)}">`);
+        },
+        'image/png': ()=>{
+            res.type('image/png');
+            res.sendFile(path.join(__dirname, 'images',randImage(imageArr)));
+        },
+        'application/json': ()=>{
+            res.type('application/json');
+            console.log(randImage(imageArr));
+            res.json({ imageUrl : randImage(imageArr)});
+        },
+        'default': () =>{
+            res.status('406');
+            res.send(`Request for ${req.accepts} is not acceptable.`)
+        }
+    });
+});
+
+/*
 app.get('/image', (req,res,next)=>{
     //let rand = Math.floor(Math.random() * (imageArr.length) );
     res.status(200);
@@ -50,7 +74,7 @@ app.get('/image', (req,res,next)=>{
     //res.send(`<head><meta http-equiv="refresh" content="1"></head><img src="/images/${imageArr[rand]}">`);
     //res.end();
 });
-/*
+*/ /*
 app.get('/images/:imagefile', (req,res,next)=>{
     res.status(200);
     res.type('image/png');
@@ -63,7 +87,7 @@ app.get('/images/:imagefile', (req,res,next)=>{
 for (let res of resources) {
 app.use(express.static(path.join(__dirname, res)));
 }
-
+/*
 app.get('/random-image', (req,res,next)=>{
     //let rand = Math.floor(Math.random() * (imageArr.length) );
     //console.log(`rand = ${rand}, imglength = ${imageArr.length}`);
@@ -76,7 +100,7 @@ app.get('/random-image', (req,res,next)=>{
     //res.send(path.join(__dirname,'images',res.imagefile));
     //res.end();
 });
-
+*/
 
 const PORT = parseInt(process.argv[2]) || parseInt(process.env.APP_PORT) || 3000
 

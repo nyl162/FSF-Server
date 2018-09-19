@@ -1,5 +1,8 @@
 const path = require ('path');
 const express = require ('express');
+const hdbs = require('express-handlebars');
+
+const asciify = require ('asciify-image');
 
 const fs = require('fs');
 
@@ -37,6 +40,10 @@ fs.readdirSync(path.join(__dirname, 'images')).forEach(file => {
 
 const app = express();
 
+app.engine('hbs',hdbs());
+app.set('view engine','hbs')
+app.set('views','views') // do nothing. just as example.
+
 const randImage = (array) => {
     const rand = Math.floor(Math.random() * (array.length) );
     return array[rand];
@@ -47,7 +54,8 @@ app.get('/image',(req,res,nex)=>{
     res.format({
         'text/html': ()=>{
             res.type('text/html');
-            res.send(`<img src="/${randImage(imageArr)}">`);
+            res.render('image',{ image: randImage(imageArr)})
+            //res.send(`<img src="/${randImage(imageArr)}">`);
         },
         'image/png': ()=>{
             res.type('image/png');
@@ -55,12 +63,30 @@ app.get('/image',(req,res,nex)=>{
         },
         'application/json': ()=>{
             res.type('application/json');
-            console.log(randImage(imageArr));
-            res.json({ imageUrl : randImage(imageArr)});
+            //console.log(randImage(imageArr));
+            res.json({ imageURL : `/${randImage(imageArr)}`});
+        },'text/plain': ()=>{
+            res.type('text/plain');
+            //res.send(asciify(path.join(__dirname, 'images',randImage(imageArr))));
+            const options = {
+                color: false,
+                fit:    'box',
+                width:  100,
+                height: 50
+            };
+            asciify(path.join(__dirname, 'images',randImage(imageArr)),options, (err,asciified) =>{
+                //if (err) throw err;
+                if(err){
+                    res.status(400).send(JSON.stringify(err));
+                    return;
+                }
+                //console.log(asciified);
+                res.send(asciified);
+            });
         },
         'default': () =>{
-            res.status('406');
-            res.send(`Request for ${req.accepts} is not acceptable.`)
+            res.status('406').end();
+            //res.send(`Request for ${req.header('accept')} is not acceptable.`)
         }
     });
 });

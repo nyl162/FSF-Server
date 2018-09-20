@@ -1,0 +1,42 @@
+
+  <div fxLayout="row" fxLayoutAlign="start">
+    <form [formGroup]="cartForm" fxFlex="glow" >
+      <div fxLayout="column" fxLayoutAlign="start" class="exPad">
+        <mat-form-field>
+          <input matInput type="text" formControlName="name" placeholder = "Username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName = "item" placeholder = "Item">
+        </mat-form-field>
+      </div> 
+    </form>
+    <div fxLayout="column" fxLayoutAlign="center">
+        <button mat-raised-button color="primary" (click)="cartAdd()" [disabled]="!cartForm.value.item"> Add </button> 
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start">
+      <app-list-content fxFlex="glow" [displayContent]="ngCartContent" class="exPad"></app-list-content>
+      <div  fxLayout="column" fxLayoutAlign="start" fxLayoutGap="2vw">
+          <button mat-raised-button color="primary" (click)="cartLoad()" [disabled]="!cartForm.value.name"> Load </button> 
+          <button mat-raised-button color="primary" (click)="cartSave()" [disabled]="!cartForm.value.name"> Save </button>
+      </div>
+  </div> 
+<!--
+<div fxLayout="row" fxLayoutAlign="start">
+    <form [formGroup]="cartForm" fxFlex="glow" >
+      <div fxLayout="column" fxLayoutAlign="start" class="exPad">
+        <mat-form-field>
+          <input matInput type="text" formControlName="name" placeholder = "Username">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" formControlName = "item" placeholder = "Item">
+        </mat-form-field>
+        <app-list-content fxFlex="glow" [displayContent]="ngCartContent" class="exPad"></app-list-content>
+      </div> 
+    </form>
+    <div fxLayout="column" fxLayoutAlign="start"  fxLayoutGap="2vw" class="exPad">
+        <button mat-raised-button color="primary" (click)="cartAdd()"> Add </button> 
+        <button mat-raised-button color="primary" (click)="cartLoad()"> Load </button> 
+        <button mat-raised-button color="primary" (click)="cartSave()"> Save </button> 
+    </div>
+-->

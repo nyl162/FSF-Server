@@ -3,14 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { importModule } from './import.module';
+import { FormInputComponent } from './form-input/form-input.component';
+import { ListContentComponent } from './list-content/list-content.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FormInputComponent,
+    ListContentComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    importModule
   ],
   providers: [],
   bootstrap: [AppComponent]

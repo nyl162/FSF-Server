@@ -16,11 +16,11 @@ app = express();
 app.get('/api/cart',(req,res)=>{
     res.status(201);
     res.type('application/json');
-    console.log(cart);
+    //console.log(cart);
     const n = cart.find(x => x.name === req.query.name);
     //console.log(cart.some(x => x.name === req.query.name));
     if (n){res.json(n);}
-    else {res.status(204).end();}
+    else {res.status(204).json({result: 'not found'});}
     //res.json(n);
     /*res.format({
         'application/json':()=>{
@@ -38,6 +38,8 @@ app.use(bodyParser.urlencoded());
 app.post('/api/cart', (req,res)=>{
     const APPcart = {name: req.body.name, content: req.body.content, saved: new Date()};
     
+    res.type('application/json');
+
     if(APPcart.content && APPcart.content.length > 0 ){
         var cartIndex = cart.find(x => x.name === APPcart.name);
         //console.log('no error' , cartIndex);
@@ -47,16 +49,17 @@ app.post('/api/cart', (req,res)=>{
             cartIndex.content = APPcart.content;
             cartIndex.saved = APPcart.saved;
             res.status(202);
-            res.send('item modified');
+            res.json({result: 'modified'});
         }else{
             cart.push(APPcart);
             res.status(201);
-            res.send('item added');
+            res.json({result: 'added'});
         }
         //res.end();
     }else{
         res.status(409);
-        res.end();
+        
+        res.json({result: 'empty'});
     }
 //console.log(cart);
 })

@@ -21,14 +21,18 @@ app.post('/',bodyParser.urlencoded(), (req,res)=>{
     console.log('formParams.limit > qHist[formParams.q].limit) --->' , formParams.limit > (qHist[formParams.q]?qHist[formParams.q].limit:0) , '==>', formParams.limit  ,'>', (qHist[formParams.q]?qHist[formParams.q].limit:0));
     console.log('---> compare date --->',(formParams.q in qHist?(new Date().getTime() - qHist[formParams.q].updated.getTime()):-1));
     //if (formParams.q in qHist) {
-    if (!(formParams.q in qHist) || parseInt(formParams.limit) > parseInt(qHist[formParams.q]?qHist[formParams.q].limit:0) || (formParams.q in qHist?(new Date().getTime() - qHist[formParams.q].updated.getTime()):-1) > delay) {
+    if (
+        !(formParams.q in qHist) 
+        || parseInt(formParams.limit) > parseInt(formParams.q in qHist?qHist[formParams.q].limit:0) 
+        || (formParams.q in qHist?(new Date().getTime() - qHist[formParams.q].updated.getTime()):-1) > delay
+        ) {
     //if (qHist[formParams.q] || formParams.limit > qHist[formParams.q].limit) {
         //param process
         const params = {
             ...formParams,
             api_key
         }
-
+        res.status(200);
         //new item
       request.get({url: 'http://api.giphy.com/v1/gifs/search',qs: params},
         (err,resp,body) =>{
@@ -55,7 +59,9 @@ app.post('/',bodyParser.urlencoded(), (req,res)=>{
                 history: qHistdata
             } 
             //res.render('main',{layout: false, imageList: qHist[formParams.q].history});
-            res.render('main',{layout: false, imageList: n.data, imageList2:[],q:formParams.q,limit:formParams.limit});
+            res.status(201);
+            res.render('main',{layout: false, imageList2 : qHist[formParams.q].history,q:formParams.q,limit:formParams.limit});
+            //res.render('main',{layout: false, imageList: n.data, imageList2:[],q:formParams.q,limit:formParams.limit});
             console.log(qHist);
         })
         //qHist.push(db[formParams.q]);
@@ -65,7 +71,8 @@ app.post('/',bodyParser.urlencoded(), (req,res)=>{
         console.log(qHist[formParams.q].history);
         const imageList2 = [...qHist[formParams.q].history]
         imageList2.splice(formParams.limit);
-        res.render('main',{layout: false, imageList: [], imageList2,q:formParams.q,limit:formParams.limit});
+        res.status(202);
+        res.render('main',{layout: false, imageList2,q:formParams.q,limit:formParams.limit});
     }
     //console.log('---after---', qHist[formParams.q]);
     //res.render('main',{layout: false, imageList: n.data});

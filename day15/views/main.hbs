@@ -21,11 +21,7 @@
         </table>     
         <button formaction="/" formmethod="POST" type="submit"> submit </button>
     </form>
-    
-    {{#each imageList }}
-        <img src="{{images.fixed_width.url}}" alt="">
-        <br>
-    {{/each}}
+    <h3>Search for result: ' {{q}} '</h3>
     {{#each imageList2 }}
         <img src="{{this}}" alt="">
         <br>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Giphy</title>
+</head>
+<body>
+    <h1>Giphy search</h1>
+    <form>
+        <table>
+            <tr>
+                <td>Search term:</td>
+                <td><input type="text" name="q" minlength="1" value="{{q}}"></td>
+            </tr>
+            <tr>
+                <td>Result:</td>
+                <td><input type="number" name="limit" min="1" value="{{limit}}"></td>
+            </tr>
+        </table>     
+        <button formaction="/" formmethod="POST" type="submit"> submit </button>
+    </form>
+    
+    {{#each imageList }}
+        <img src="{{images.fixed_width.url}}" alt="">
+        <br>
+    {{/each}}
+    {{#each imageList2 }}
+        <img src="{{this}}" alt="">
+        <br>
+    {{/each}}
+</body>
+</html>

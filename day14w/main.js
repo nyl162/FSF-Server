@@ -2,14 +2,14 @@ const path = require ('path');
 const bodyParser = require ('body-parser');
 const express = require ('express');
 
-const cart = [];
-cart.push({
+var cart = [];
+/*cart.push({
     name: "username",
     content: ['item0','item1','item2','item3','item4'],
     saved: new Date()});
 cart.push(    {name: "username2",
 content: ['item5','item6','item7','item8','item9'],
-saved: new Date()});
+saved: new Date()});*/
 
 app = express();
 
@@ -32,7 +32,7 @@ app.get('/api/cart',(req,res)=>{
    
     } else {
         res.status(204).json({
-            name:'',content:[],saved:''
+            name:req.query.name,content:[],saved:''
         });
     }
     //res.json(n);

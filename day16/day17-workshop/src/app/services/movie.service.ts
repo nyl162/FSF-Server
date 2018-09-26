@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class MovieService {
 
   finalSearchCriteria:string;
-  criteria = {limit: 3,offset:0}
+  criteria = {limit: 50,offset:0}
 
   constructor(private http:HttpClient) { }
 

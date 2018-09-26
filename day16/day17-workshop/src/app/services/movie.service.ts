@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class MovieService {
 
   finalSearchCriteria:string;
-  criteria = {limit: 50,offset:0}
+  criteria = {limit: environment.svcLimit,offset:0}
 
   constructor(private http:HttpClient) { }
 
@@ -26,7 +26,15 @@ export class MovieService {
         catchError(this.handleError('getAllBooks', []))
       );
   }
-
+/*
+  getMovieDetail() : Observable<any>{
+    return this.http
+      .get(`${environment.api_url}/films/2`)
+      .pipe(
+        catchError(this.handleError('getAllBooks', []))
+      );
+  }
+*/
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead

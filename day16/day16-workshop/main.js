@@ -58,8 +58,10 @@ var makeQuery = (sql, pool)=>{
 }
 
 const sqlFindAllFilms = "SELECT * FROM film limit ? offset ?";
+const sqlFindFilmDetail = "select title, description, release_year from film where film_id = ?";
 
 var findAllFilms = makeQuery(sqlFindAllFilms, pool);
+var findFilmDetail = makeQuery(sqlFindFilmDetail, pool);
 /*findAllFilms().then((results)=>{
     console.log(results);
 }).catch((error)=>{
@@ -84,7 +86,19 @@ app.get("/films",cors(corsOptions),(req,res)=>{
         console.error(error);
     });
    // res.json({result : "success"});
-})
+});
+
+app.get('/film/:filmID',(req,res)=>{ //cors(corsOptions)
+    //console.log(req.params);
+    findFilmDetail([req.params.filmID]).then((results)=>{
+        //console.log(results.length);
+        if (results.length < 1) {res.status(204);}
+        res.json(results);
+    }).catch((error)=>{
+        console.error(error);
+    });
+    //res.status(202).end();
+});
 
 
 PORT = process.argv[2] || process.env.APP_PORT || 3000

@@ -1,11 +1,15 @@
-<div class="sBorder">
+<div class="sBorder" fxLayout="column">
   <mat-toolbar class="sBorder bannerFont">Sakila movie Database</mat-toolbar>
-  <div *ngFor="let n of movieList" class="exPad">
-    <!---<a [href]=n.url class = "linkFont">---->
-    <a (click)="urlClick(n.url)" class = "linkFont">
-      {{n.title}}
-    </a>
+  <div>
+    <div *ngFor="let n of movieList" class="exPad">
+      <!---<a [href]=n.url class = "linkFont">---->
+      <a (click)="urlClick(n.url)" class = "linkFont">
+        {{n.title}}
+      </a>
+    </div>
   </div>
 </div>
-<button mat-raised-button color="primary" (click)="prev()">Prev</button>
-<button mat-raised-button color="primary" (click)="next()">Next</button>
+<div fxLayout="row" fxLayoutAlign = "space-between" class = "exPad">
+  <button mat-raised-button color="primary" (click)="prev()">Prev</button>
+  <button mat-raised-button color="primary" (click)="next()">Next</button>
+</div>

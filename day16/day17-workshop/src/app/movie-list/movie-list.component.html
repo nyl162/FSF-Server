@@ -1,0 +1,11 @@
+<div class="sBorder">
+  <mat-toolbar class="sBorder bannerFont">Sakila movie Database</mat-toolbar>
+  <div *ngFor="let n of movieList" class="exPad">
+    <!---<a [href]=n.url class = "linkFont">---->
+    <a (click)="urlClick(n.url)" class = "linkFont">
+      {{n.title}}
+    </a>
+  </div>
+</div>
+<button mat-raised-button color="primary" (click)="prev()">Prev</button>
+<button mat-raised-button color="primary" (click)="next()">Next</button>

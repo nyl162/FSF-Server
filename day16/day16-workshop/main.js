@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+var cors = require('cors')
 const express = require ('express');
 const path = require ('path');
 const bP = require ('body-parser');
@@ -9,6 +9,16 @@ const app = express();
 
 //console.log("DB USER : " + process.env.DB_USER);
 //console.log("DB NAME : " + process.env.DB_NAME);
+var whitelist = ['http://localhost:4200', 'http://localhost:4200']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
@@ -57,10 +67,13 @@ var findAllFilms = makeQuery(sqlFindAllFilms, pool);
 });
 */
 
-app.get("/films",(req,res)=>{
-    console.log(req);
-    let qLimit = 50;
-    let qOffset = 0;
+app.get("/films",cors(corsOptions),(req,res)=>{
+    //console.log(req);
+    //let qLimit = 50;
+    //let qOffset = 0;
+    //console.log(req.query);
+    let qLimit = parseInt(req.query.limit) || 50;
+    let qOffset = parseInt(req.query.offset) || 0;
     findAllFilms([qLimit,qOffset]).then((results)=>{
         let n = []
         results.forEach((x)=>{

@@ -10,6 +10,6 @@
   </div>
 </div>
 <div fxLayout="row" fxLayoutAlign = "space-between" class = "exPad">
-  <button mat-raised-button color="primary" (click)="prev()">Prev</button>
-  <button mat-raised-button color="primary" (click)="next()">Next</button>
+  <button mat-raised-button color="primary" (click)="prev()" [disabled]="prevButton">Prev</button>
+  <button mat-raised-button color="primary" (click)="next()" [disabled]="nextButton">Next</button>
 </div>

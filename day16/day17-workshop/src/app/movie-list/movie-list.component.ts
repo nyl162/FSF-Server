@@ -12,10 +12,20 @@ export class MovieListComponent implements OnInit {
 
   constructor(private movieSvc:MovieService) { }
 
+  nextButton: boolean;
+  prevButton: boolean;
+
   ngOnInit() {
     this.movieSvc.getAllMovies().subscribe((results)=>{
       console.log(results);
       this.movieList = results;
+      if(results.length<this.movieSvc.criteria.limit){
+        this.prevButton = true;
+        this.nextButton = true;
+      }else{
+        this.prevButton = true;
+        this.nextButton = false;
+      }
     });
   }
 
@@ -26,8 +36,11 @@ export class MovieListComponent implements OnInit {
   prev(){
     if(this.movieSvc.criteria.offset>this.movieSvc.criteria.limit){
       this.movieSvc.criteria.offset = this.movieSvc.criteria.offset - this.movieSvc.criteria.limit;
+      this.prevButton = false;
+      this.nextButton = false;
     }else{
       this.movieSvc.criteria.offset = 0;
+      this.prevButton = true;
     }
     console.log(this.movieSvc.criteria.offset);
     this.movieSvc.getAllMovies().subscribe((results)=>{
@@ -43,7 +56,11 @@ export class MovieListComponent implements OnInit {
       console.log(results);
       this.movieList = results;
       if(results.length<this.movieSvc.criteria.limit){
-        this.movieSvc.criteria.offset = this.movieSvc.criteria.offset - this.movieSvc.criteria.limit
+        //this.movieSvc.criteria.offset = this.movieSvc.criteria.offset - this.movieSvc.criteria.limit
+        this.nextButton = true;
+      }else{
+        this.prevButton = false;
+        this.nextButton = false;
       }
     });
   }

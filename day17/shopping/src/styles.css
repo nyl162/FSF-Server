@@ -3,3 +3,9 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
+.exPad{
+    margin : 10px;
+}
+.dRedBdr{
+    border:1px solid red
+}

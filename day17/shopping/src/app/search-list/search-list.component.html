@@ -1,0 +1,36 @@
+
+  <div fxLayout="column">
+    <form #search="ngForm" (ngSubmit)="searchDB(search)">
+      <div fxLayout="row">
+        <mat-form-field class="exPad" fxFlex="grow">
+          <input matInput placeholder="Brand" name = "brand" ngModel>
+        </mat-form-field>
+        <mat-form-field class="exPad" fxFlex="grow">
+          <input matInput placeholder="Product Name" name = "name" ngModel>
+        </mat-form-field>
+        <div fxLayout="column" fxLayoutAlign="center">
+          <button mat-raised-button color="primary" class="exPad" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div fxLayout="row">
+      <div class="fixBox">
+          <button mat-raised-button color="primary" class="exPad" (click)="addClick()">Add</button>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center" fxFlex="grow" (click)="sortBrand()">
+        <div>Brand<mat-icon *ngIf="grocerySvc.criteria.order === 2">keyboard_arrow_down</mat-icon><mat-icon *ngIf="grocerySvc.criteria.order === 3">keyboard_arrow_up</mat-icon></div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start" fxFlex="grow" (click)="sortName()">
+        <div>Product Name<mat-icon *ngIf="grocerySvc.criteria.order === 0">keyboard_arrow_down</mat-icon><mat-icon *ngIf="grocerySvc.criteria.order === 1">keyboard_arrow_up</mat-icon></div>
+      </div>
+    </div>
+<div *ngFor="let n of tempResult" class="exPad">
+  <mat-card fxLayout="row" (click)="editClick(n.id)">
+    <div class="fixBox">
+      <img [src]=n.URL alt="" class="heightLimit">
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" fxFlex="grow">{{n.brand}}</div>
+    <div fxLayout="row" fxLayoutAlign="start" fxFlex="grow">{{n.name}}</div>
+  </mat-card>
+</div>

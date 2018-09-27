@@ -1,0 +1,21 @@
+<div fxLayout="column">
+    <form #add="ngForm" (ngSubmit)="addDB(add)">
+      <div fxLayout="row">
+        <mat-form-field class="exPad" fxFlex="grow">
+          <input matInput type="number" max="999999999999" maxlength="12" placeholder="UPC12" name = "upc12" ngModel required>
+        </mat-form-field>
+        <mat-form-field class="exPad" fxFlex="grow">
+          <input matInput type="text" placeholder="Brand" name = "brand" ngModel required>
+        </mat-form-field>
+        <mat-form-field type="text" class="exPad" fxFlex="grow">
+          <input matInput placeholder="Product Name" name = "name" ngModel required>
+        </mat-form-field>
+        <div fxLayout="column" fxLayoutAlign="center">
+          <button mat-raised-button color="primary" class="exPad" type="submit" [disabled]="add.invalid">Add</button>
+        </div>
+      </div>
+    </form>
+    <div>
+      {{disStr}}
+    </div>
+  </div>

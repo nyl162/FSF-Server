@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  svcLimit: 20,
+  api_url: "http://localhost:3000"
 };
